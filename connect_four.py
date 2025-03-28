@@ -110,6 +110,8 @@ def my_evaluate_board(board):
     else:
         x_two_streaks = 0
         o_two_streaks = 0
+        x_three_streaks = 0
+        o_three_streaks = 0
         # Streak of two to the RIGHT
         for col in range(len(board) - 1):
             for row in range(len(board[0])):
@@ -117,6 +119,15 @@ def my_evaluate_board(board):
                     x_two_streaks += 1
                 elif board[col][row] != ' ' and board[col + 1][row] == "O":
                     o_two_streaks += 1
+        # Streak of three to the RIGHT
+        for col in range(len(board) - 2):
+            for row in range(len(board[0])):
+                if board[col][row] != ' ' and board[col + 1][row] != ' ' and board[col + 2][row] != ' ':
+                    if board[col][row] == "X" and board[col + 1][row] == "X" and board[col + 2][row] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col + 1][row] == "O" and board[col + 2][row] == "O":
+                        o_three_streaks += 1
+
         # Streak of two to the LEFT
         for col in range(1, len(board)):
             for row in range(len(board[0])):
@@ -124,20 +135,110 @@ def my_evaluate_board(board):
                     x_two_streaks += 1
                 elif board[col][row] != ' ' and board[col - 1][row] == "O":
                     o_two_streaks += 1
-        # Streak of two to the UP
+        # Streak of three to the LEFT
+        for col in range(2, len(board)):  
+            for row in range(len(board[0])):
+                if board[col][row] != ' ' and board[col - 1][row] != ' ' and board[col - 2][row] != ' ':
+                    if board[col][row] == "X" and board[col - 1][row] == "X" and board[col - 2][row] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col - 1][row] == "O" and board[col - 2][row] == "O":
+                        o_three_streaks += 1
+
+        # Streak of two UP
         for col in range(len(board)):
             for row in range(1, len(board[0])):
                 if board[col][row] != ' ' and board[col][row - 1] == "X":
                     x_two_streaks += 1
                 elif board[col][row] != ' ' and board[col][row - 1] == "O":
                     o_two_streaks += 1
-        # Streak of two to the DOWN
+        # Streak of three UP
+        for col in range(len(board)):
+            for row in range(len(board[0]) - 2):  
+                if board[col][row] != ' ' and board[col][row + 1] != ' ' and board[col][row + 2] != ' ':
+                    if board[col][row] == "X" and board[col][row + 1] == "X" and board[col][row + 2] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col][row + 1] == "O" and board[col][row + 2] == "O":
+                        o_three_streaks += 1
+
+        # Streak of two DOWN
         for col in range(len(board)):
             for row in range(len(board[0]) - 1):
                 if board[col][row] != ' ' and board[col][row + 1] == "X":
                     x_two_streaks += 1
                 elif board[col][row] != ' ' and board[col][row + 1] == "O":
                     o_two_streaks += 1
+        # Streak of three DOWN
+        for col in range(len(board)):
+            for row in range(2, len(board[0])):  
+                if board[col][row] != ' ' and board[col][row - 1] != ' ' and board[col][row - 2] != ' ':
+                    if board[col][row] == "X" and board[col][row - 1] == "X" and board[col][row - 2] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col][row - 1] == "O" and board[col][row - 2] == "O":
+                        o_three_streaks += 1
+
+        # Streak of two UP-RIGHT
+        for col in range(len(board) - 1):
+            for row in range(1, len(board[0])):
+                if board[col][row] != ' ' and board[col + 1][row - 1] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] != ' ' and board[col + 1][row - 1] == "O":
+                    o_two_streaks += 1
+        # Streak of Three UP-RIGHT
+        for col in range(len(board) - 2):
+            for row in range(len(board[0]) - 2): 
+                if board[col][row] != ' ' and board[col + 1][row + 1] != ' ' and board[col + 2][row + 2] != ' ':
+                    if board[col][row] == "X" and board[col + 1][row + 1] == "X" and board[col + 2][row + 2] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col + 1][row + 1] == "O" and board[col + 2][row + 2] == "O":
+                        o_three_streaks += 1
+
+        # Streak of two UP-LEFT
+        for col in range(1, len(board)):
+            for row in range(1, len(board[0])):
+                if board[col][row] != ' ' and board[col - 1][row - 1] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] != ' ' and board[col - 1][row - 1] == "O":
+                    o_two_streaks += 1
+        # Streak of three UP-LEFT
+        for col in range(2, len(board)):
+            for row in range(len(board[0]) - 2):  # Stop at len(board[0]) - 2 to avoid out-of-bounds error
+                if board[col][row] != ' ' and board[col - 1][row + 1] != ' ' and board[col - 2][row + 2] != ' ':
+                    if board[col][row] == "X" and board[col - 1][row + 1] == "X" and board[col - 2][row + 2] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col - 1][row + 1] == "O" and board[col - 2][row + 2] == "O":
+                        o_three_streaks += 1
+        
+        # Streak of two DOWN-RIGHT
+        for col in range(len(board) - 1):
+            for row in range(len(board[0]) - 1):
+                if board[col][row] != ' ' and board[col + 1][row + 1] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] != ' ' and board[col + 1][row + 1] == "O":
+                    o_two_streaks += 1
+        # Streak of three DOWN-RIGHT
+        for col in range(len(board) - 2):
+            for row in range(2, len(board[0])):  # Start at 2 to ensure we don't go out-of-bounds
+                if board[col][row] != ' ' and board[col + 1][row - 1] != ' ' and board[col + 2][row - 2] != ' ':
+                    if board[col][row] == "X" and board[col + 1][row - 1] == "X" and board[col + 2][row - 2] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col + 1][row - 1] == "O" and board[col + 2][row - 2] == "O":
+                        o_three_streaks += 1      
+
+        # Streak of two DOWN-LEFT
+        for col in range(1, len(board)):
+            for row in range(len(board[0]) - 1):
+                if board[col][row] != ' ' and board[col - 1][row + 1] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] != ' ' and board[col - 1][row + 1] == "O":
+                    o_two_streaks += 1
+        # Streak of three DOWN-LEFT
+        for col in range(2, len(board)):
+            for row in range(2, len(board[0])):  # Start at 2 to ensure we don't go out-of-bounds
+                if board[col][row] != ' ' and board[col - 1][row - 1] != ' ' and board[col - 2][row - 2] != ' ':
+                    if board[col][row] == "X" and board[col - 1][row - 1] == "X" and board[col - 2][row - 2] == "X":
+                        x_three_streaks += 1
+                    elif board[col][row] == "O" and board[col - 1][row - 1] == "O" and board[col - 2][row - 2] == "O":
+                        o_three_streaks += 1
         return x_two_streaks - o_two_streaks
 
 # ------------------------------------------------------------
