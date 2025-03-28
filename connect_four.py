@@ -110,13 +110,35 @@ def my_evaluate_board(board):
     else:
         x_two_streaks = 0
         o_two_streaks = 0
+        # Streak of two to the RIGHT
         for col in range(len(board) - 1):
             for row in range(len(board[0])):
-                # Streak of two to the RIGHT
-                if board[col][row] and board[col + 1][row] == "X":
+                if board[col][row] != ' ' and board[col + 1][row] == "X":
                     x_two_streaks += 1
-                elif board[col][row] and board[col + 1][row] == "O":
+                elif board[col][row] != ' ' and board[col + 1][row] == "O":
                     o_two_streaks += 1
+        # Streak of two to the LEFT
+        for col in range(1, len(board)):
+            for row in range(len(board[0])):
+                if board[col][row] != ' ' and board[col - 1][row] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] != ' ' and board[col - 1][row] == "O":
+                    o_two_streaks += 1
+        # Streak of two to the UP
+        for col in range(len(board)):
+            for row in range(1, len(board[0])):
+                if board[col][row] != ' ' and board[col][row - 1] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] != ' ' and board[col][row - 1] == "O":
+                    o_two_streaks += 1
+        # Streak of two to the DOWN
+        for col in range(len(board)):
+            for row in range(len(board[0]) - 1):
+                if board[col][row] != ' ' and board[col][row + 1] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] != ' ' and board[col][row + 1] == "O":
+                    o_two_streaks += 1
+        return x_two_streaks - o_two_streaks
 
 # ------------------------------------------------------------
 def count_streaks(board, symbol):
