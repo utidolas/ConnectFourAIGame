@@ -88,7 +88,7 @@ def has_won(board, symbol):
 def game_is_over(board):
   return has_won(board, "X") or has_won(board, "O") or len(available_moves(board)) == 0
 
- # Evaluate Functions 
+ # -------------------- Evaluate Functions --------------------
 def codecademy_evaluate_board(board):
     if has_won(board, "X"):
       return float("Inf")
@@ -102,6 +102,23 @@ def codecademy_evaluate_board(board):
 def random_eval(board):
   return random.randint(-100, 100)
 
+def my_evaluate_board(board):
+    if has_won(board, "X"):
+      return float("Inf")
+    elif has_won(board, "O"):
+      return -float("Inf")
+    else:
+        x_two_streaks = 0
+        o_two_streaks = 0
+        for col in range(len(board) - 1):
+            for row in range(len(board[0])):
+                # Streak of two to the RIGHT
+                if board[col][row] and board[col + 1][row] == "X":
+                    x_two_streaks += 1
+                elif board[col][row] and board[col + 1][row] == "O":
+                    o_two_streaks += 1
+
+# ------------------------------------------------------------
 def count_streaks(board, symbol):
     count = 0
     for col in range(len(board)):
